@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 
 class Transaction {
-  final String id, title;
+  final String id;
+  final String title;
   final double amount;
   final DateTime date;
 
