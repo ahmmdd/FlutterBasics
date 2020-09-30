@@ -9,13 +9,17 @@ class TimerApp extends StatefulWidget {
 }
 
 class _TimerAppState extends State<TimerApp> {
-  final startTime = DateTime(2020, 9, 30, 1, 30);
-  final endTime = DateTime(2020, 9, 30, 4, 00);
+  // final startTime = DateTime(2020, 9, 30, 1, 30);
+  // final endTime = DateTime(2020, 9, 30, 4, 00);
+  final startTime = DateTime.parse("2020-09-30 02:23:17");
+  final endTime = DateTime.parse("2020-09-30 02:35:17");
+
   final currentTime = DateTime.now();
 
   int duration;
 
   void calculateDuration(DateTime _startTime, DateTime _endTime) {
+    print(currentTime);
     if (DateTime.now().isAfter(_startTime) &&
         DateTime.now().isBefore(_endTime)) {
       // do something
