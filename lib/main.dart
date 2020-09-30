@@ -9,10 +9,24 @@ class TimerApp extends StatefulWidget {
 }
 
 class _TimerAppState extends State<TimerApp> {
+  final startTime = DateTime(2020, 9, 30, 1, 30);
+  final endTime = DateTime(2020, 9, 30, 4, 00);
+  final currentTime = DateTime.now();
+
+  int duration;
+
+  void calculateDuration(DateTime _startTime, DateTime _endTime) {
+    if (DateTime.now().isAfter(_startTime) &&
+        DateTime.now().isBefore(_endTime)) {
+      // do something
+      duration = _endTime.difference(DateTime.now()).inMinutes;
+    }
+  }
+
   final interval = 1;
   static const period = const Duration(minutes: 1);
 
-  int duration = 600;
+  // int duration = 600;
   bool isActive = true;
 
   Timer timer;
@@ -27,6 +41,8 @@ class _TimerAppState extends State<TimerApp> {
 
   @override
   Widget build(BuildContext context) {
+    calculateDuration(startTime, endTime);
+
     if (timer == null) {
       timer = Timer.periodic(period, (Timer t) {
         handleTick();
