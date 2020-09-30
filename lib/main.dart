@@ -1,116 +1,69 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
 
-import './widgets/new_transaction.dart';
-import './widgets/transactionList.dart';
-import './models/transaction.dart';
+void main() => runApp(TimerApp());
 
-void main() => runApp(MyApp());
+class TimerApp extends StatefulWidget {
+  @override
+  _TimerAppState createState() => _TimerAppState();
+}
 
-class MyApp extends StatelessWidget {
+class _TimerAppState extends State<TimerApp> {
+  final interval = 1;
+  static const period = const Duration(minutes: 1);
+
+  int duration = 600;
+  bool isActive = true;
+
+  Timer timer;
+
+  void handleTick() {
+    if (isActive) {
+      setState(() {
+        duration -= interval;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (timer == null) {
+      timer = Timer.periodic(period, (Timer t) {
+        handleTick();
+      });
+      if (duration <= 0) {
+        timer.cancel();
+      }
+    }
+    /*
+    // If calculation done in minutes
+    int seconds = duration % 60;
+    int minutes = duration ~/ 60;
+    int hours = duration ~/ (60 * 60);
+    */
+    int minutes = duration % 60;
+    int hours = duration ~/ 60;
+
     return MaterialApp(
-      title: 'Personal Expenses',
-      theme: ThemeData(
-          primarySwatch: Colors.purple,
-          accentColor: Colors.amber,
-          fontFamily: 'Quicksand',
-          appBarTheme: AppBarTheme(
-            textTheme: ThemeData.light().textTheme.copyWith(
-                  title: TextStyle(
-                    fontFamily: 'OpenSans',
-                    fontSize: 20,
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
+          body: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    '${hours.toString()}h ${minutes.toString()}m',
+                    style: TextStyle(
+                      fontSize: 25,
+                      color: Colors.black,
+                    ),
                   ),
-                ),
-          )),
-      home: MyHomePage(),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  // String titleInput;
-  // String amountInput;
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  final List<Transaction> _userTransactions = [
-    /* Transaction(
-      id: 't1',
-      title: 'New Shoes',
-      amount: 69.99,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't2',
-      title: 'Weekly Groceries',
-      amount: 16.53,
-      date: DateTime.now(),
-    ), */
-  ];
-
-  void _addNewTransaction(String txTitle, double txAmount) {
-    final newTx = Transaction(
-      title: txTitle,
-      amount: txAmount,
-      date: DateTime.now(),
-      id: DateTime.now().toString(),
-    );
-
-    setState(() {
-      _userTransactions.add(newTx);
-    });
-  }
-
-  void _startAddNewTransaction(BuildContext ctx) {
-    showModalBottomSheet(
-      context: ctx,
-      builder: (_) {
-        return GestureDetector(
-          onTap: () {},
-          child: NewTransaction(_addNewTransaction),
-          behavior: HitTestBehavior.opaque,
-        );
-      },
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Personal Expenses'),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.add),
-            onPressed: () => _startAddNewTransaction(context),
-          ),
-        ],
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          // mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Container(
-              width: double.infinity,
-              child: Card(
-                color: Colors.blue,
-                child: Text('CHART!'),
-                elevation: 5,
+                ],
               ),
-            ),
-            TransactionList(_userTransactions),
-          ],
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () => _startAddNewTransaction(context),
-      ),
-    );
+            ],
+          ),
+        ));
   }
 }
