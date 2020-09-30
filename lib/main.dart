@@ -44,6 +44,7 @@ class _TimerAppState extends State<TimerApp> {
     int minutes = duration % 60;
     int hours = duration ~/ 60;
 
+    // Widget of countdown timer
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Scaffold(
