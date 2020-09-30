@@ -62,25 +62,26 @@ class _TimerAppState extends State<TimerApp> {
 
     // Widget of countdown timer
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(
-          body: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    '${hours.toString()}h ${minutes.toString()}m',
-                    style: TextStyle(
-                      fontSize: 25,
-                      color: Colors.black,
-                    ),
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  '${hours.toString()}h ${minutes.toString()}m',
+                  style: TextStyle(
+                    fontSize: 25,
+                    color: Colors.black,
                   ),
-                ],
-              ),
-            ],
-          ),
-        ));
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
